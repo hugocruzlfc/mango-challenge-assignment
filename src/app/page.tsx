@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="space-y-4">
+    <main className="space-y-10">
       <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight md:text-5xl ">
         Mango Challenge Assignment
       </h1>
