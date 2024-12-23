@@ -7,6 +7,5 @@ export default async function Page() {
 
   const response = await data.json();
 
-  console.log(response);
-  return <div>2</div>;
+  return <div>{/* <FixedRange values={response.rangeValues} /> */}</div>;
 }
