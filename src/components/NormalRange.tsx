@@ -73,7 +73,6 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
     );
   };
 
-  // Manejadores de clic en las etiquetas de los valores min y max
   const handleClickLabel =
     (valueType: "min" | "max") => (e: React.MouseEvent) => {
       if (valueType === "min") {
@@ -129,7 +128,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
       </label>
       <div
         ref={rangeRef}
-        className="relative w-72 h-2 bg-gray-300"
+        className="relative w-72 h-2 bg-gray-300 rounded"
         onClick={(e) => {
           if (
             e.clientX <
