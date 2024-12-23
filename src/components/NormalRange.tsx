@@ -128,6 +128,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
       </label>
       <div
         ref={rangeRef}
+        data-testid="range-slider"
         className="relative w-72 h-2 bg-gray-300 rounded"
         onClick={(e) => {
           if (
@@ -147,6 +148,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
             left: `${getPosition(minValue)}%`,
           }}
           onMouseDown={handleMouseDown("min")}
+          data-testid="min-handle"
         ></div>
         <div
           className="absolute top-0 left-0 w-4 h-4 bg-black rounded-full cursor-pointer transform -translate-x-1/2 hover:scale-110"
@@ -154,6 +156,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
             left: `${getPosition(maxValue)}%`,
           }}
           onMouseDown={handleMouseDown("max")}
+          data-testid="max-handle"
         ></div>
       </div>
       <label

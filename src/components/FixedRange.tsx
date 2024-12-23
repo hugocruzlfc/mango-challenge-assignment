@@ -79,6 +79,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
           ref={rangeRef}
           className="relative w-96 h-2 bg-gray-300 rounded"
           onClick={handleClickRange}
+          data-testid="range-slider"
         >
           {values.map((value) =>
             value !== minValue && value !== maxValue ? (
@@ -107,6 +108,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
               left: `${getPosition(minValue)}%`,
             }}
             onMouseDown={handleMouseDown("min")}
+            data-testid="min-handle"
           ></div>
 
           <div
@@ -115,6 +117,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
               left: `${getPosition(maxValue)}%`,
             }}
             onMouseDown={handleMouseDown("max")}
+            data-testid="max-handle"
           ></div>
         </div>
 
