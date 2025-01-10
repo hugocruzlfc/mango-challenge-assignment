@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { Input } from "./ui/input";
+import { useDragHandlers } from "@/hooks/use-drag-handlers";
 
 interface NormalRangeProps {
   min: number;
@@ -43,17 +44,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
     [dragging, min, max, minValue, maxValue]
   );
 
-  const handleMouseUp = useCallback(() => {
-    setDragging(null);
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  }, [handleMouseMove]);
-
-  const handleMouseDown = (type: "min" | "max") => (e: React.MouseEvent) => {
-    setDragging(type);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
+  const { handleMouseDown } = useDragHandlers(setDragging, handleMouseMove);
 
   const handleClickMin = (e: React.MouseEvent) => {
     const rect = rangeRef.current?.getBoundingClientRect();
@@ -115,7 +106,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
         {editingMin ? (
           <Input
             type="number"
-            className="w-16"
+            className="md:w-20 w-16"
             value={minValue}
             onBlur={handleBlurMin}
             onChange={(e) => setMinValue(Number(e.target.value))}
@@ -147,7 +138,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
           style={{
             left: `${getPosition(minValue)}%`,
           }}
-          onMouseDown={handleMouseDown("min")}
+          onMouseDown={() => handleMouseDown("min")}
           data-testid="min-handle"
         ></div>
         <div
@@ -155,7 +146,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
           style={{
             left: `${getPosition(maxValue)}%`,
           }}
-          onMouseDown={handleMouseDown("max")}
+          onMouseDown={() => handleMouseDown("max")}
           data-testid="max-handle"
         ></div>
       </div>
@@ -166,7 +157,7 @@ export default function NormalRange({ min, max }: NormalRangeProps) {
         {editingMax ? (
           <Input
             type="number"
-            className="w-16"
+            className="md:w-20 w-16"
             value={maxValue}
             onBlur={handleBlurMax}
             onChange={(e) => setMaxValue(Number(e.target.value))}

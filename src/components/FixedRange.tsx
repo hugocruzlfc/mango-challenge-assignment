@@ -1,5 +1,6 @@
 "use client";
 
+import { useDragHandlers } from "@/hooks/use-drag-handlers";
 import { useCallback, useRef, useState } from "react";
 
 interface FixedRangeProps {
@@ -44,17 +45,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
     [dragging, values, minValue, maxValue]
   );
 
-  const handleMouseUp = useCallback(() => {
-    setDragging(null);
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  }, [handleMouseMove]);
-
-  const handleMouseDown = (type: "min" | "max") => () => {
-    setDragging(type);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
+  const { handleMouseDown } = useDragHandlers(setDragging, handleMouseMove);
 
   const handleClickRange = (e: React.MouseEvent) => {
     const rect = rangeRef.current?.getBoundingClientRect();
@@ -73,7 +64,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center ">
         <label className="text-sm">{minValue}€</label>
         <div
           ref={rangeRef}
@@ -107,7 +98,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
             style={{
               left: `${getPosition(minValue)}%`,
             }}
-            onMouseDown={handleMouseDown("min")}
+            onMouseDown={() => handleMouseDown("min")}
             data-testid="min-handle"
           ></div>
 
@@ -116,7 +107,7 @@ export default function FixedRange({ values }: FixedRangeProps) {
             style={{
               left: `${getPosition(maxValue)}%`,
             }}
-            onMouseDown={handleMouseDown("max")}
+            onMouseDown={() => handleMouseDown("max")}
             data-testid="max-handle"
           ></div>
         </div>
